@@ -1,5 +1,8 @@
 package game.enemy;
 
+import game.FrameCouter;
+import physics.BoxColider;
+import physics.Physics;
 import game.GameObject;
 import game.renderer.Animation;
 import tklibs.SpriteUtils;
@@ -7,18 +10,22 @@ import tklibs.SpriteUtils;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Enemy extends GameObject {
+public class Enemy extends GameObject implements Physics {
+    BoxColider boxColider;
+    FrameCouter fireCouter;
+
     public Enemy(){
         ArrayList<BufferedImage> images = new ArrayList<>();
         // load & add image
-        images.add(SpriteUtils.loadImage("assets/images/enemies/level0/black/0.png"));
-        images.add(SpriteUtils.loadImage("assets/images/enemies/level0/black/1.png"));
-        images.add(SpriteUtils.loadImage("assets/images/enemies/level0/black/2.png"));
-        images.add(SpriteUtils.loadImage("assets/images/enemies/level0/black/4.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\enemies\\level0\\blue\\0.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\enemies\\level0\\blue\\1.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\enemies\\level0\\blue\\2.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\enemies\\level0\\blue\\3.png"));
         this.renderer = new Animation(images);
         this.position.set(200, 400);
-        this.velocity.set(5, 0);
-        this.velocity.set(0, 4);
+        this.velocity.set(1, 0);
+        this.boxColider = new BoxColider(this.position, 30, 30);
+        this.fireCouter = new FrameCouter(20);
     }
 
     private void limitPosition() {
@@ -36,14 +43,19 @@ public class Enemy extends GameObject {
         this.fire();
     }
 
-    int count; //TODO: continue editing
+//    int count; //TODO: continue editing
 
     private void fire() {
-        this.count++;
-        if (this.count > 20) {
+//        this.count++;
+        if (fireCouter.run()) {
             EnemyBullet bullet = new EnemyBullet();
             bullet.position.set(this.position);
-            this.count = 0;
+            this.fireCouter.reset();
         }
+    }
+
+    @Override
+    public BoxColider getBoxColider() {
+        return this.boxColider;
     }
 }

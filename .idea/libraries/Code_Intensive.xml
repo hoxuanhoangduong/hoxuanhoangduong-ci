@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Code Intensive">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/ci-begin-master.zip!/" />
+      <root url="jar://$PROJECT_DIR$/session_4.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -2,26 +2,30 @@ package game;
 
 import game.renderer.Animation;
 import game.renderer.SingleImageRenderer;
+import physics.BoxColider;
+import physics.Physics;
 import tklibs.SpriteUtils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player extends GameObject{
+public class Player extends GameObject implements Physics {
     Sphere sphereLeft;
     Sphere sphereRight;
+    BoxColider boxColider;
+    FrameCouter fireCouter;
 
     public Player() {
         super();
         ArrayList<BufferedImage> images = new ArrayList<>();
-        images.add(SpriteUtils.loadImage("assets/images/players/straight/0.png"));
-        images.add(SpriteUtils.loadImage("assets/images/players/straight/1.png"));
-        images.add(SpriteUtils.loadImage("assets/images/players/straight/2.png"));
-        images.add(SpriteUtils.loadImage("assets/images/players/straight/3.png"));
-        images.add(SpriteUtils.loadImage("assets/images/players/straight/4.png"));
-        images.add(SpriteUtils.loadImage("assets/images/players/straight/5.png"));
-        images.add(SpriteUtils.loadImage("assets/images/players/straight/6.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\players\\straight\\0.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\players\\straight\\1.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\players\\straight\\2.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\players\\straight\\3.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\players\\straight\\4.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\players\\straight\\5.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\players\\straight\\6.png"));
         this.renderer = new Animation(images);
 //        BufferedImage image = SpriteUtils.loadImage("assets/images/players/straight/0.png");
 //        this.renderer = new SingleImageRenderer(image);
@@ -29,6 +33,8 @@ public class Player extends GameObject{
         this.sphereLeft = new Sphere();
         this.sphereRight = new Sphere();
         this.updateSpherePosition();
+        this.boxColider = new BoxColider(this.position,30, 30);
+        this.fireCouter = new FrameCouter(20);
     }
 
     @Override
@@ -47,20 +53,23 @@ public class Player extends GameObject{
                     .add(30, 30);
     }
 
-    int count; // TODO: continue editing
+//    int count; // TODO: continue editing
     private void fire() {
-        count++;
-        if(count > 20) {
+//        count++;
+        if(fireCouter.run()) {
             if(GameWindow.isFirePress) {
-                float startAngle =  -(float)Math.PI / 4;
-                float endAngle = -3 * (float)Math.PI / 4;
-                float offset = (endAngle - startAngle) / 4;
-                for (int i = 0; i < 5; i++) {
-                    PlayerBullet bullet = new PlayerBullet();
-                    bullet.position.set(this.position.x - 15, this.position.y);
-                    bullet.velocity.setAngle(startAngle + offset * i);
-                    this.count = 0;
-                }
+//                float startAngle =  -(float)Math.PI / 4;
+//                float endAngle = -3 * (float)Math.PI / 4;
+//                float offset = (endAngle - startAngle) / 4;
+//                for (int i = 0; i < 5; i++) {
+//                    PlayerBullet bullet = new PlayerBullet();
+//                    bullet.position.set(this.position.x - 15, this.position.y);
+//                    bullet.velocity.setAngle(startAngle + offset * i);
+//                    this.count = 0;
+//                }
+                PlayerBullet bullet = new PlayerBullet();
+                bullet.position.set(this.position);
+                this.fireCouter.reset();
             }
         }
     }
@@ -96,5 +105,10 @@ public class Player extends GameObject{
             vX = 5;
         }
         this.velocity.set(vX, vY).setLength(5);
+    }
+
+    @Override
+    public BoxColider getBoxColider() {
+        return this.boxColider;
     }
 }

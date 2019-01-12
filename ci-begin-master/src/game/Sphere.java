@@ -12,10 +12,10 @@ public class Sphere extends GameObject {
 
     public Sphere() {
         ArrayList<BufferedImage> images = new ArrayList<>();
-        images.add(SpriteUtils.loadImage("assets/images/sphere/0.png"));
-        images.add(SpriteUtils.loadImage("assets/images/sphere/1.png"));
-        images.add(SpriteUtils.loadImage("assets/images/sphere/2.png"));
-        images.add(SpriteUtils.loadImage("assets/images/sphere/3.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\sphere\\0.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\sphere\\1.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\sphere\\2.png"));
+        images.add(SpriteUtils.loadImage("E:\\Code Intensive\\ci-begin-master\\assets\\images\\sphere\\3.png"));
         this.renderer = new Animation(images);
     }
 
