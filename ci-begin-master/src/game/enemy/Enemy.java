@@ -1,6 +1,8 @@
 package game.enemy;
 
 import game.FrameCouter;
+import game.Player;
+import game.PlayerBullet;
 import physics.BoxColider;
 import physics.Physics;
 import game.GameObject;
@@ -51,6 +53,14 @@ public class Enemy extends GameObject implements Physics {
             EnemyBullet bullet = new EnemyBullet();
             bullet.position.set(this.position);
             this.fireCouter.reset();
+        }
+    }
+
+    public void takeDamage (){
+        PlayerBullet playerBullet = GameObject.findIntersected(PlayerBullet.class, this.boxColider);
+        if (playerBullet != null){
+            playerBullet.deActive();
+            this.deActive();
         }
     }
 

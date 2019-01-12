@@ -17,4 +17,6 @@ public class SphereBullet extends GameObject {
         this.renderer = new Animation(images,2);
         this.velocity.set(0, -7);
     }
+
+
 }

@@ -1,5 +1,6 @@
 package game;
 
+import game.enemy.EnemyBullet;
 import game.renderer.Animation;
 import game.renderer.SingleImageRenderer;
 import physics.BoxColider;
@@ -15,6 +16,7 @@ public class Player extends GameObject implements Physics {
     Sphere sphereRight;
     BoxColider boxColider;
     FrameCouter fireCouter;
+    int hp;
 
     public Player() {
         super();
@@ -35,6 +37,7 @@ public class Player extends GameObject implements Physics {
         this.updateSpherePosition();
         this.boxColider = new BoxColider(this.position,30, 30);
         this.fireCouter = new FrameCouter(20);
+        this.hp = 10;
     }
 
     @Override
@@ -105,6 +108,20 @@ public class Player extends GameObject implements Physics {
             vX = 5;
         }
         this.velocity.set(vX, vY).setLength(5);
+    }
+
+    public void takeDamage(int damage){
+        EnemyBullet enemyBullet = GameObject.findIntersected(EnemyBullet.class, this.boxColider);
+        if (enemyBullet != null){
+            enemyBullet.deActive();
+            this.hp -= damage;
+            System.out.println(this.hp);
+            if (this.hp == 0) {
+                this.deActive();
+                sphereLeft.deActive();
+                sphereRight.deActive();
+            }
+        }
     }
 
     @Override

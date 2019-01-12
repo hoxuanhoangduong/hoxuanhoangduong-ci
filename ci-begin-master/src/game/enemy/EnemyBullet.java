@@ -26,7 +26,8 @@ public class EnemyBullet extends GameObject implements Physics {
         super.run();
         Player player = GameObject.findIntersected(Player.class, this.boxColider);
         if (player != null) {
-            player.deActive();
+            player.takeDamage(1);
+            this.deActive();
         }
     }
 
